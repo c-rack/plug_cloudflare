@@ -4,8 +4,8 @@ defmodule Plug.Cloudflare.Mixfile do
   def project do
     [
       app: :plug_cloudflare,
-      version: "0.1.0",
-      elixir: ">= 1.0.4",
+      version: "1.0.0",
+      elixir: ">= 1.0.2",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
       deps: deps,
