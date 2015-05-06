@@ -1,6 +1,6 @@
 # plug_cloudflare [![Hex.pm Version](http://img.shields.io/hexpm/v/plug_cloudflare.svg)](https://hex.pm/packages/plug_cloudflare)
 
-Inspired by [mod_cloudflare](https://github.com/cloudflare/mod_cloudflare), this [Elixir](http://elixir-lang.org/) [plug](https://github.com/elixir-lang/plug) parses Cloudflare's `CF-Connecting-IP` HTTP request header into [Plug.Conn](http://hexdocs.pm/plug/Plug.Conn.html)'s `remote_ip` field.
+Inspired by [mod_cloudflare](https://github.com/cloudflare/mod_cloudflare), this [Elixir](http://elixir-lang.org/) [plug](https://github.com/elixir-lang/plug) parses [Cloudflare](https://www.cloudflare.com/)'s `CF-Connecting-IP` HTTP request header into [Plug.Conn](http://hexdocs.pm/plug/Plug.Conn.html)'s `remote_ip` field.
 
 ## Setup
 
@@ -16,9 +16,17 @@ end
 
 ## Usage
 
+This plug should be one of the first ones in your pipeline.
+It is therefore recommended to put it in the endpoint instead of a pipeline.
+
 ```elixir
-pipeline :browser do
+defmodule MyApp.Endpoint do
+  use Phoenix.Endpoint, otp_app: my_app
+
   plug Plug.Cloudflare
+
+  # Other plugs omitted for clarity
+  
 end
 ```
 
