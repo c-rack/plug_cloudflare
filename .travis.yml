@@ -5,7 +5,7 @@ sudo: false
 otp_release:
     - 17.4
 install:
-    - mix hex.local --force
+    - mix local.hex --force
     - mix deps.get
 script:
     - mix test
