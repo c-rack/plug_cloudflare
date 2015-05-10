@@ -20,6 +20,7 @@ defmodule Plug.Cloudflare.Mixfile do
 
   defp deps do
     [
+      {:cidr, ">= 0.2.0"},
       {:plug, ">= 0.11.0"}
     ]
   end
