@@ -22,12 +22,13 @@ defmodule Plug.CloudflareTest do
   @opts TestRouter.init([])
 
   test "sets remote_ip correctly" do
-    conn = conn(:get, "/") |> put_req_header("cf-connecting-ip", "199.27.128.1")
+    conn = conn(:get, "/") |> put_req_header("cf-connecting-ip", "192.168.1.1")
+    conn = %Plug.Conn{conn | remote_ip: {103, 21, 244, 0}}
     conn = TestRouter.call(conn, @opts)
     assert conn.state == :sent
     assert conn.status == 200
     assert conn.resp_body == "test"
-    assert conn.remote_ip == { 199, 27, 128, 1 }
+    assert conn.remote_ip == {192, 168, 1, 1}
   end
 
   test "should skip if cf-connecting-ip is not set" do
@@ -36,7 +37,7 @@ defmodule Plug.CloudflareTest do
     assert conn.state == :sent
     assert conn.status == 200
     assert conn.resp_body == "test"
-    assert conn.remote_ip == { 127, 0, 0, 1 }
+    assert conn.remote_ip == {127, 0, 0, 1}
   end
 
   test "should skip if cf-connecting-ip is empty" do
@@ -45,7 +46,7 @@ defmodule Plug.CloudflareTest do
     assert conn.state == :sent
     assert conn.status == 200
     assert conn.resp_body == "test"
-    assert conn.remote_ip == { 127, 0, 0, 1 }
+    assert conn.remote_ip == {127, 0, 0, 1}
   end
 
   test "should skip if cf-connecting-ip is nonsense" do
@@ -54,7 +55,28 @@ defmodule Plug.CloudflareTest do
     assert conn.state == :sent
     assert conn.status == 200
     assert conn.resp_body == "test"
-    assert conn.remote_ip == { 127, 0, 0, 1 }
+    assert conn.remote_ip == {127, 0, 0, 1}
+  end
+
+  test "should skip if not from Cloudflare IP" do
+    conn = conn(:get, "/") |> put_req_header("cf-connecting-ip", "199.27.128.1")
+    conn = %Plug.Conn{conn | remote_ip: {192, 168, 1, 1}}
+    conn = TestRouter.call(conn, @opts)
+    assert conn.state == :sent
+    assert conn.status == 200
+    assert conn.resp_body == "test"
+    assert conn.remote_ip == {192, 168, 1, 1}
+    #103.21.244.0
+  end
+
+  test "should not skip if from Cloudflare IP" do
+    conn = conn(:get, "/") |> put_req_header("cf-connecting-ip", "192.168.1.1")
+    conn = %Plug.Conn{conn | remote_ip: {103, 21, 244, 0}}
+    conn = TestRouter.call(conn, @opts)
+    assert conn.state == :sent
+    assert conn.status == 200
+    assert conn.resp_body == "test"
+    assert conn.remote_ip == {192, 168, 1, 1}
   end
 
 end

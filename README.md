@@ -9,7 +9,7 @@ To use this plug in your projects, edit your mix.exs file and add the project as
 ```elixir
 defp deps do
   [
-    { :plug_cloudflare, "~> 1.0.0" }
+    { :plug_cloudflare, "~> 1.1.0" }
   ]
 end
 ```
