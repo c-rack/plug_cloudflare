@@ -28,6 +28,14 @@ defmodule Plug.Cloudflare.Mixfile do
   defp package do
     %{
       contributors: ["Constantin Rack"],
+      files: [
+        "lib",
+        "mix.exs",
+        "ips-v4",
+        "ips-v6",
+        "README.md",
+        "LICENSE"
+      ],
       licenses: ["Apache License 2.0"],
       links: %{"Github" => "https://github.com/c-rack/plug_cloudflare"}
     }
