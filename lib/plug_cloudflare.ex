@@ -9,20 +9,17 @@ defmodule Plug.Cloudflare do
 
   @doc "Callback implementation for Plug.call/2"
   def call(conn, _options) do
-    if (conn.remote_ip |> is_from_cloudflare) do
-      Plug.Conn.get_req_header(conn, "cf-connecting-ip") |> parse(conn)
-    else
-      conn
+    case (conn.remote_ip |> is_from_cloudflare) do
+      true  -> Plug.Conn.get_req_header(conn, "cf-connecting-ip") |> parse(conn)
+      false -> conn
     end
   end
 
   defp parse([], conn), do: conn
   defp parse([ip_address], conn) do
     case (ip_address |> String.to_char_list |> :inet.parse_address) do
-      {:ok, remote_ip} ->
-        %Plug.Conn{conn | remote_ip: remote_ip}
-      {:error, _} ->
-        conn
+      {:ok, remote_ip} -> %Plug.Conn{conn | remote_ip: remote_ip}
+      {:error, _}      -> conn
     end
   end
 
