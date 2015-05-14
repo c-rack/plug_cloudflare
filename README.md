@@ -4,7 +4,7 @@ Inspired by [mod_cloudflare](https://github.com/cloudflare/mod_cloudflare), this
 
 ## Setup
 
-To use this plug in your projects, edit your mix.exs file and add the project as a dependency:
+To use plug_cloudflare in your projects, edit your `mix.exs` file and add plug_cloudflare as a dependency:
 
 ```elixir
 defp deps do
