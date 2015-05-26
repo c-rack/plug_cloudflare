@@ -1,6 +1,6 @@
 # plug_cloudflare
 
-Inspired by [mod_cloudflare](https://github.com/cloudflare/mod_cloudflare), this [Elixir](http://elixir-lang.org/) [plug](https://github.com/elixir-lang/plug) parses [Cloudflare](https://www.cloudflare.com/)'s `CF-Connecting-IP` HTTP request header into [Plug.Conn](http://hexdocs.pm/plug/Plug.Conn.html)'s `remote_ip` field.
+Inspired by [mod_cloudflare](https://github.com/cloudflare/mod_cloudflare), this [Elixir](http://elixir-lang.org/) [plug](https://github.com/elixir-lang/plug) parses [CloudFlare](https://www.cloudflare.com/)'s `CF-Connecting-IP` HTTP request header into [Plug.Conn](http://hexdocs.pm/plug/Plug.Conn.html)'s `remote_ip` field.
 
 [![Hex.pm Version](http://img.shields.io/hexpm/v/plug_cloudflare.svg)](https://hex.pm/packages/plug_cloudflare) 
 [![Build Status](https://travis-ci.org/c-rack/plug_cloudflare.png?branch=master)](https://travis-ci.org/c-rack/plug_cloudflare)
