@@ -6,7 +6,7 @@ defmodule Mix.Tasks.Update.Ips do
     "https://www.cloudflare.com/ips-v6"
   ]
 
-  @shortdoc "Fetches the latest IPs from Cloudflare."
+  @shortdoc "Fetches the latest IPs from CloudFlare."
 
   def run(_) do
     System.cmd("rm", ["ips-v4", "ips-v6"])

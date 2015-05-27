@@ -4,12 +4,12 @@ defmodule Plug.Cloudflare.Mixfile do
   def project do
     [
       app: :plug_cloudflare,
-      version: "1.1.0",
+      version: "1.2.0",
       elixir: ">= 1.0.2",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
       deps: deps,
-      description: "Parses Cloudflare's CF-Connecting-IP header into Plug.Conn's remote_ip field.",
+      description: "Parses CloudFlare's CF-Connecting-IP header into Plug.Conn's remote_ip field.",
       package: package,
     ]
   end

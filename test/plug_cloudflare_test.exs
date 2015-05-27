@@ -3,7 +3,7 @@ defmodule TestRouter do
 
   plug :match
   plug :dispatch
-  plug Plug.Cloudflare
+  plug Plug.CloudFlare
 
   get "/" do
     send_resp(conn, 200, "test")
@@ -13,11 +13,11 @@ defmodule TestRouter do
 
 end
 
-defmodule Plug.CloudflareTest do
+defmodule Plug.CloudFlareTest do
   use ExUnit.Case, async: true
   use Plug.Test
 
-  doctest Plug.Cloudflare
+  doctest Plug.CloudFlare
 
   @opts TestRouter.init([])
 
@@ -58,7 +58,7 @@ defmodule Plug.CloudflareTest do
     assert conn.remote_ip == {127, 0, 0, 1}
   end
 
-  test "should skip if not from Cloudflare IP" do
+  test "should skip if not from CloudFlare IP" do
     conn = conn(:get, "/") |> put_req_header("cf-connecting-ip", "199.27.128.1")
     conn = %Plug.Conn{conn | remote_ip: {192, 168, 1, 1}}
     conn = TestRouter.call(conn, @opts)
@@ -69,7 +69,7 @@ defmodule Plug.CloudflareTest do
     #103.21.244.0
   end
 
-  test "should not skip if from Cloudflare IP" do
+  test "should not skip if from CloudFlare IP" do
     conn = conn(:get, "/") |> put_req_header("cf-connecting-ip", "192.168.1.1")
     conn = %Plug.Conn{conn | remote_ip: {103, 21, 244, 0}}
     conn = TestRouter.call(conn, @opts)

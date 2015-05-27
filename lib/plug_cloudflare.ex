@@ -1,7 +1,7 @@
-defmodule Plug.Cloudflare do
+defmodule Plug.CloudFlare do
   
   @moduledoc """
-  Parses Cloudflare's CF-Connecting-IP header into Plug.Conn's remote_ip field.
+  Parses CloudFlare's CF-Connecting-IP header into Plug.Conn's remote_ip field.
   """
   
   @doc "Callback implementation for Plug.init/1"

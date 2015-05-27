@@ -26,7 +26,7 @@ It is therefore recommended to put it in the endpoint instead of a pipeline.
 defmodule MyApp.Endpoint do
   use Phoenix.Endpoint, otp_app: my_app
 
-  plug Plug.Cloudflare
+  plug Plug.CloudFlare
 
   # Other plugs omitted for clarity
   
