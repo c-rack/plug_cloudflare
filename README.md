@@ -12,7 +12,7 @@ To use plug_cloudflare in your projects, edit your `mix.exs` file and add plug_c
 ```elixir
 defp deps do
   [
-    { :plug_cloudflare, "~> 1.1.0" }
+    {:plug_cloudflare, ">= 1.2.0"}
   ]
 end
 ```
