@@ -37,7 +37,7 @@ defmodule Plug.Cloudflare.Mixfile do
         "LICENSE"
       ],
       licenses: ["Apache License 2.0"],
-      links: %{"Github" => "https://github.com/c-rack/plug_cloudflare"}
+      links: %{"GitHub" => "https://github.com/c-rack/plug_cloudflare"}
     }
   end
 
