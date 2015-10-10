@@ -27,7 +27,7 @@ defmodule Plug.Cloudflare.Mixfile do
 
   defp package do
     %{
-      contributors: ["Constantin Rack"],
+      maintainers: ["Constantin Rack"],
       files: [
         "lib",
         "mix.exs",
