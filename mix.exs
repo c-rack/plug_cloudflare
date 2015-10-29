@@ -4,7 +4,7 @@ defmodule Plug.Cloudflare.Mixfile do
   def project do
     [
       app: :plug_cloudflare,
-      version: "1.2.0",
+      version: "1.2.1",
       elixir: ">= 1.0.2",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
@@ -20,7 +20,7 @@ defmodule Plug.Cloudflare.Mixfile do
 
   defp deps do
     [
-      {:cidr, ">= 0.2.0"},
+      {:cidr, ">= 0.3.0"},
       {:plug, ">= 0.11.0"}
     ]
   end

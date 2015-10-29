@@ -31,7 +31,7 @@ defmodule Plug.CloudFlare do
     |> Enum.map(&Macro.escape/1)
     
   defp is_from_cloudflare(ip), do: is_from_cloudflare(unquote(cidrs), ip)
-  defp is_from_cloudflare([h|t], ip), do: CIDR.match(h, ip) or is_from_cloudflare(t, ip)
+  defp is_from_cloudflare([h|t], ip), do: CIDR.match!(h, ip) or is_from_cloudflare(t, ip)
   defp is_from_cloudflare([], _ip), do: false
   
 end
