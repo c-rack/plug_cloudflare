@@ -6,8 +6,8 @@ defmodule Plug.Cloudflare.Mixfile do
       app: :plug_cloudflare,
       build_embedded: Mix.env == :prod,
       deps: [
-        {:cidr, ">= 0.3.0"},
-        {:plug, ">= 0.11.0"}
+        {:cidr, ">= 0.5.0"},
+        {:plug, ">= 1.1.2"}
       ],
       description: """
       Convert CloudFlare's CF-Connecting-IP header to Plug.Conn's remote_ip field.
@@ -29,7 +29,7 @@ defmodule Plug.Cloudflare.Mixfile do
         }
       },
       start_permanent: Mix.env == :prod,
-      version: "1.2.1"
+      version: "1.3.0"
     ]
   end
 
