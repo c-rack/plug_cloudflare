@@ -29,7 +29,7 @@ defmodule Plug.Cloudflare.Mixfile do
         }
       },
       start_permanent: Mix.env == :prod,
-      version: "1.2.1"
+      version: "1.3.0"
     ]
   end
 
