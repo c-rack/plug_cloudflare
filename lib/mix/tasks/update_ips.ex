@@ -1,4 +1,7 @@
 defmodule Mix.Tasks.Update.Ips do
+
+  @moduledoc false
+
   use Mix.Task
 
   @urls [
