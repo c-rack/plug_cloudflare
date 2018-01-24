@@ -21,6 +21,10 @@ defmodule Plug.CloudFlareTest do
 
   @opts TestRouter.init([])
 
+  setup do
+    Application.put_env(:plug, :validate_header_keys_during_test, true)
+  end
+
   test "sets remote_ip correctly" do
     conn = conn(:get, "/") |> put_req_header("cf-connecting-ip", "192.168.1.1")
     conn = %Plug.Conn{conn | remote_ip: {103, 21, 244, 0}}

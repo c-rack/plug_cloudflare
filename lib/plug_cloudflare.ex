@@ -20,7 +20,7 @@ defmodule Plug.CloudFlare do
 
   defp parse([], conn), do: conn
   defp parse([ip_address], conn) do
-    case (ip_address |> String.to_char_list |> :inet.parse_address) do
+    case (ip_address |> String.to_charlist |> :inet.parse_address) do
       {:ok, remote_ip} -> %Conn{conn | remote_ip: remote_ip}
       {:error, _}      -> conn
     end
