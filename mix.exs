@@ -4,11 +4,11 @@ defmodule Plug.Cloudflare.Mixfile do
   def project do
     [
       app: :plug_cloudflare,
-      build_embedded: Mix.env == :prod,
+      build_embedded: Mix.env() == :prod,
       deps: [
-        {:cidr,  ">= 1.0.0"},
+        {:cidr, ">= 1.0.0"},
         {:credo, ">= 0.3.5", only: [:dev, :test]},
-        {:plug,  ">= 1.1.2"}
+        {:plug, ">= 1.1.2"}
       ],
       description: """
       Convert CloudFlare's CF-Connecting-IP header to Plug.Conn's remote_ip field.
@@ -29,7 +29,7 @@ defmodule Plug.Cloudflare.Mixfile do
           "GitHub" => "https://github.com/c-rack/plug_cloudflare"
         }
       },
-      start_permanent: Mix.env == :prod,
+      start_permanent: Mix.env() == :prod,
       version: "1.3.0"
     ]
   end
@@ -37,5 +37,4 @@ defmodule Plug.Cloudflare.Mixfile do
   def application do
     [applications: []]
   end
-
 end
