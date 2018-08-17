@@ -1,16 +1,15 @@
 defmodule TestRouter do
   use Plug.Router
 
-  plug :match
-  plug :dispatch
-  plug Plug.CloudFlare
+  plug(:match)
+  plug(:dispatch)
+  plug(Plug.CloudFlare)
 
   get "/" do
     send_resp(conn, 200, "test")
   end
 
-  match _, do: send_resp(conn, 404, "not found")
-
+  match(_, do: send_resp(conn, 404, "not found"))
 end
 
 defmodule Plug.CloudFlareTest do
@@ -66,7 +65,7 @@ defmodule Plug.CloudFlareTest do
     assert conn.status == 200
     assert conn.resp_body == "test"
     assert conn.remote_ip == {192, 168, 1, 1}
-    #103.21.244.0
+    # 103.21.244.0
   end
 
   test "should not skip if from CloudFlare IP" do
@@ -78,5 +77,4 @@ defmodule Plug.CloudFlareTest do
     assert conn.resp_body == "test"
     assert conn.remote_ip == {192, 168, 1, 1}
   end
-
 end

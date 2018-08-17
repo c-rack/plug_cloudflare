@@ -1,5 +1,4 @@
 defmodule Mix.Tasks.Update.Ips do
-
   @moduledoc false
 
   use Mix.Task
@@ -13,12 +12,11 @@ defmodule Mix.Tasks.Update.Ips do
 
   def run(_) do
     System.cmd("rm", ["ips-v4", "ips-v6"])
-    for url <- @urls, do: fetch url
+    for url <- @urls, do: fetch(url)
   end
 
   defp fetch(url) do
-    IO.puts "Fetching #{url}"
+    IO.puts("Fetching #{url}")
     System.cmd("wget", ["--quiet", url])
   end
-
 end
