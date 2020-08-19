@@ -35,6 +35,6 @@ defmodule Plug.Cloudflare.Mixfile do
   end
 
   def application do
-    [applications: []]
+    [applications: [:cidr, :plug]]
   end
 end
