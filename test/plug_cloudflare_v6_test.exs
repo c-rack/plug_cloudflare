@@ -1,4 +1,4 @@
-defmodule TestRouter do
+defmodule TestRouterIPv6 do
   use Plug.Router
 
   plug(:match)
@@ -12,31 +12,31 @@ defmodule TestRouter do
   match(_, do: send_resp(conn, 404, "not found"))
 end
 
-defmodule Plug.CloudFlareTest do
+defmodule Plug.CloudFlareV6Test do
   use ExUnit.Case, async: true
   use Plug.Test
 
   doctest Plug.CloudFlare
 
-  @opts TestRouter.init([])
+  @opts TestRouterIPv6.init([])
 
   setup do
     Application.put_env(:plug, :validate_header_keys_during_test, true)
   end
 
   test "sets remote_ip correctly" do
-    conn = conn(:get, "/") |> put_req_header("cf-connecting-ip", "192.168.1.1")
-    conn = %Plug.Conn{conn | remote_ip: {103, 21, 244, 0}}
-    conn = TestRouter.call(conn, @opts)
+    conn = conn(:get, "/") |> put_req_header("cf-connecting-ip", "fd43:4adf:02cf:f63f::")
+    conn = %Plug.Conn{conn | remote_ip: {9216, 51968, 96, 1811, 0, 0, 0, 0}}
+    conn = TestRouterIPv6.call(conn, @opts)
     assert conn.state == :sent
     assert conn.status == 200
     assert conn.resp_body == "test"
-    assert conn.remote_ip == {192, 168, 1, 1}
+    assert conn.remote_ip == {64835, 19167, 719, 63039, 0, 0, 0, 0}
   end
 
   test "should skip if cf-connecting-ip is not set" do
     conn = conn(:get, "/")
-    conn = TestRouter.call(conn, @opts)
+    conn = TestRouterIPv6.call(conn, @opts)
     assert conn.state == :sent
     assert conn.status == 200
     assert conn.resp_body == "test"
@@ -45,7 +45,7 @@ defmodule Plug.CloudFlareTest do
 
   test "should skip if cf-connecting-ip is empty" do
     conn = conn(:get, "/") |> put_req_header("cf-connecting-ip", "")
-    conn = TestRouter.call(conn, @opts)
+    conn = TestRouterIPv6.call(conn, @opts)
     assert conn.state == :sent
     assert conn.status == 200
     assert conn.resp_body == "test"
@@ -54,7 +54,7 @@ defmodule Plug.CloudFlareTest do
 
   test "should skip if cf-connecting-ip is nonsense" do
     conn = conn(:get, "/") |> put_req_header("cf-connecting-ip", "not an ip")
-    conn = TestRouter.call(conn, @opts)
+    conn = TestRouterIPv6.call(conn, @opts)
     assert conn.state == :sent
     assert conn.status == 200
     assert conn.resp_body == "test"
@@ -62,23 +62,22 @@ defmodule Plug.CloudFlareTest do
   end
 
   test "should skip if not from CloudFlare IP" do
-    conn = conn(:get, "/") |> put_req_header("cf-connecting-ip", "199.27.128.1")
-    conn = %Plug.Conn{conn | remote_ip: {192, 168, 1, 1}}
-    conn = TestRouter.call(conn, @opts)
+    conn = conn(:get, "/") |> put_req_header("cf-connecting-ip", "fd43:4adf:02cf:f63f::")
+    conn = %Plug.Conn{conn | remote_ip: {64835, 19167, 719, 63039, 0, 0, 0, 0}}
+    conn = TestRouterIPv6.call(conn, @opts)
     assert conn.state == :sent
     assert conn.status == 200
     assert conn.resp_body == "test"
-    assert conn.remote_ip == {192, 168, 1, 1}
-    # 103.21.244.0
+    assert conn.remote_ip == {64835, 19167, 719, 63039, 0, 0, 0, 0}
   end
 
   test "should not skip if from CloudFlare IP" do
-    conn = conn(:get, "/") |> put_req_header("cf-connecting-ip", "192.168.1.1")
+    conn = conn(:get, "/") |> put_req_header("cf-connecting-ip", "fd43:4adf:02cf:f63f::")
     conn = %Plug.Conn{conn | remote_ip: {103, 21, 244, 0}}
-    conn = TestRouter.call(conn, @opts)
+    conn = TestRouterIPv6.call(conn, @opts)
     assert conn.state == :sent
     assert conn.status == 200
     assert conn.resp_body == "test"
-    assert conn.remote_ip == {192, 168, 1, 1}
+    assert conn.remote_ip == {64835, 19167, 719, 63039, 0, 0, 0, 0}
   end
 end

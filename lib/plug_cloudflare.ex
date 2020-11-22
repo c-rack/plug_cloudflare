@@ -26,7 +26,7 @@ defmodule Plug.CloudFlare do
     end
   end
 
-  cidrs =
+  cidrs_v4 =
     [__DIR__, "../ips-v4"]
     |> Path.join()
     |> File.stream!([], :line)
@@ -34,7 +34,19 @@ defmodule Plug.CloudFlare do
     |> Enum.map(&CIDR.parse/1)
     |> Enum.map(&Macro.escape/1)
 
-  defp is_from_cloudflare(ip), do: is_from_cloudflare(unquote(cidrs), ip)
+  cidrs_v6 =
+    [__DIR__, "../ips-v6"]
+    |> Path.join()
+    |> File.stream!([], :line)
+    |> Enum.to_list()
+    |> Enum.map(&CIDR.parse/1)
+    |> Enum.map(&Macro.escape/1)
+
+  defp is_from_cloudflare({_, _, _, _} = ip), do: is_from_cloudflare(unquote(cidrs_v4), ip)
+
+  defp is_from_cloudflare({_, _, _, _, _, _, _, _} = ip),
+    do: is_from_cloudflare(unquote(cidrs_v6), ip)
+
   defp is_from_cloudflare([h | t], ip), do: CIDR.match!(h, ip) or is_from_cloudflare(t, ip)
   defp is_from_cloudflare([], _ip), do: false
 end
