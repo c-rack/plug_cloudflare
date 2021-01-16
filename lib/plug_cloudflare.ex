@@ -10,7 +10,7 @@ defmodule Plug.CloudFlare do
 
   @doc "Callback implementation for Plug.call/2"
   def call(conn, _options) do
-    if conn.remote_ip |> is_from_cloudflare do
+    if is_from_cloudflare(conn.remote_ip) do
       conn |> Conn.get_req_header("cf-connecting-ip") |> parse(conn)
     else
       conn
