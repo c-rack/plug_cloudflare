@@ -80,4 +80,24 @@ defmodule Plug.CloudFlareV6Test do
     assert conn.resp_body == "test"
     assert conn.remote_ip == {64835, 19167, 719, 63039, 0, 0, 0, 0}
   end
+
+  test "should skip if not from CloudFlare IP (ipv4-mapped ipv6 remote_ip)" do
+    conn = conn(:get, "/") |> put_req_header("cf-connecting-ip", "199.27.128.1")
+    conn = %Plug.Conn{conn | remote_ip: {0, 0, 0, 0, 0, 65535, 49320, 257}}
+    conn = TestRouterIPv6.call(conn, @opts)
+    assert conn.state == :sent
+    assert conn.status == 200
+    assert conn.resp_body == "test"
+    assert conn.remote_ip == {0, 0, 0, 0, 0, 65535, 49320, 257}
+  end
+
+  test "should not skip if from CloudFlare IP  (ipv4-mapped ipv6 remote_ip)" do
+    conn = conn(:get, "/") |> put_req_header("cf-connecting-ip", "192.168.1.1")
+    conn = %Plug.Conn{conn | remote_ip: {0, 0, 0, 0, 0, 65535, 26389, 62464}}
+    conn = TestRouterIPv6.call(conn, @opts)
+    assert conn.state == :sent
+    assert conn.status == 200
+    assert conn.resp_body == "test"
+    assert conn.remote_ip == {192, 168, 1, 1}
+  end
 end

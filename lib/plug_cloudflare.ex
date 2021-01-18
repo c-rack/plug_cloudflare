@@ -44,6 +44,12 @@ defmodule Plug.CloudFlare do
 
   defp is_from_cloudflare({_, _, _, _} = ip), do: is_from_cloudflare(unquote(cidrs_v4), ip)
 
+  # See RFC4291 Section 2.5.5.2 (https://tools.ietf.org/html/rfc4291#section-2.5.5.2)
+  defp is_from_cloudflare({0, 0, 0, 0, 0, 65535, _, _} = ipv4_mapped_ipv6) do
+    ip = :inet.ipv4_mapped_ipv6_address(ipv4_mapped_ipv6)
+    is_from_cloudflare(unquote(cidrs_v4), ip)
+  end
+
   defp is_from_cloudflare({_, _, _, _, _, _, _, _} = ip),
     do: is_from_cloudflare(unquote(cidrs_v6), ip)
 
