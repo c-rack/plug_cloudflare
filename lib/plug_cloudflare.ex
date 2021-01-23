@@ -10,7 +10,7 @@ defmodule Plug.CloudFlare do
 
   @doc "Callback implementation for Plug.call/2"
   def call(conn, _options) do
-    if conn.remote_ip |> is_from_cloudflare do
+    if is_from_cloudflare(conn.remote_ip) do
       conn |> Conn.get_req_header("cf-connecting-ip") |> parse(conn)
     else
       conn
@@ -43,6 +43,12 @@ defmodule Plug.CloudFlare do
     |> Enum.map(&Macro.escape/1)
 
   defp is_from_cloudflare({_, _, _, _} = ip), do: is_from_cloudflare(unquote(cidrs_v4), ip)
+
+  # See RFC4291 Section 2.5.5.2 (https://tools.ietf.org/html/rfc4291#section-2.5.5.2)
+  defp is_from_cloudflare({0, 0, 0, 0, 0, 65535, _, _} = ipv4_mapped_ipv6) do
+    ip = :inet.ipv4_mapped_ipv6_address(ipv4_mapped_ipv6)
+    is_from_cloudflare(unquote(cidrs_v4), ip)
+  end
 
   defp is_from_cloudflare({_, _, _, _, _, _, _, _} = ip),
     do: is_from_cloudflare(unquote(cidrs_v6), ip)
