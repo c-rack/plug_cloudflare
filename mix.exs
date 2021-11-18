@@ -1,6 +1,9 @@
 defmodule Plug.Cloudflare.Mixfile do
   use Mix.Project
 
+  @source_url "https://github.com/c-rack/plug_cloudflare"
+  @version "1.3.0"
+
   def project do
     [
       app: :plug_cloudflare,
@@ -8,8 +11,10 @@ defmodule Plug.Cloudflare.Mixfile do
       deps: [
         {:cidr, ">= 1.0.0"},
         {:credo, ">= 0.3.5", only: [:dev, :test]},
-        {:plug, ">= 1.1.2"}
+        {:ex_doc, ">= 0.0.0", only: [:dev]},
+        {:plug, ">= 1.1.2"},
       ],
+      docs: docs(),
       description: """
       Convert CloudFlare's CF-Connecting-IP header to Plug.Conn's remote_ip field.
       """,
@@ -24,17 +29,30 @@ defmodule Plug.Cloudflare.Mixfile do
           "LICENSE",
           "README.md"
         ],
-        licenses: ["Apache License 2.0"],
+        licenses: ["Apache-2.0"],
         links: %{
-          "GitHub" => "https://github.com/c-rack/plug_cloudflare"
+          "GitHub" => @source_url
         }
       },
       start_permanent: Mix.env() == :prod,
-      version: "1.3.0"
+      version: @version
     ]
   end
 
   def application do
     [applications: [:cidr, :plug]]
+  end
+
+  defp docs do
+    [
+      extras: [
+        LICENSE: [title: "License"],
+        "README.md": [title: "Overview"]
+      ],
+      main: "readme",
+      source_url: @source_url,
+      source_ref: "#{@version}",
+      formatters: ["html"]
+    ]
   end
 end
