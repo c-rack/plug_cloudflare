@@ -1,6 +1,6 @@
 defmodule Plug.CloudFlare do
   @moduledoc """
-  Parses CloudFlare's CF-Connecting-IP header into Plug.Conn's remote_ip field.
+  Parses CloudFlare's CF-Connecting-IP header into Plug.Conn's `remote_ip` field.
   """
 
   alias Plug.Conn
