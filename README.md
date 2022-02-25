@@ -38,6 +38,14 @@ defmodule MyApp.Endpoint do
 end
 ```
 
+## Behavior
+
+This plug makes effort to avoid tampering with the remote IP if the app is not behind Cloudflare.  The remote IP will only be changed by this plug if:
+
+1.  the CF-Connecting-IP header is present
+1.  the CF-Connecting-IP header parses to a valid IP address
+1.  the peer the request is coming from is a Cloudflare IP address
+
 ## Contribution Process
 
 This project uses the [C4.1 process](http://rfc.zeromq.org/spec:22) for all code changes.
