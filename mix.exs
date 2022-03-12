@@ -9,7 +9,7 @@ defmodule Plug.Cloudflare.Mixfile do
       app: :plug_cloudflare,
       build_embedded: Mix.env() == :prod,
       deps: [
-        {:cidr, ">= 1.0.0"},
+        {:cidr, ">= 1.1.0"},
         {:credo, ">= 0.3.5", only: [:dev, :test]},
         {:ex_doc, ">= 0.0.0", only: [:dev]},
         {:plug, ">= 1.1.2"},
