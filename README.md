@@ -40,11 +40,11 @@ end
 
 ## Behavior
 
-This plug makes effort to avoid tampering with the remote IP if the app is not behind Cloudflare.  The remote IP will only be changed by this plug if:
+This plug makes an effort to avoid tampering with the remote IP if the app is not running behind Cloudflare.  The remote IP will only be changed by this plug if:
 
-1.  the CF-Connecting-IP header is present
-1.  the CF-Connecting-IP header parses to a valid IP address
-1.  the peer the request is coming from is a Cloudflare IP address
+1.  The CF-Connecting-IP header is present
+1.  The CF-Connecting-IP header parses to a valid IP address
+1.  The peer making the request is a Cloudflare IP address
 
 ## Contribution Process
 
